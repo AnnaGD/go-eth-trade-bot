@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/AnnaGD/go-eth-trade-bot/cmd/keystore"
 	"github.com/spf13/cobra"
-	// "github.com/spf13/viper"
 )
 
 var rootCmd = &cobra.Command{
@@ -21,4 +21,8 @@ func Execute() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func init() {
+	rootCmd.AddCommand(keystore.KeystoreCmd)
 }
