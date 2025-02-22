@@ -1,2 +1,4 @@
 .env
 keystore
+
+!cmd/keystore
