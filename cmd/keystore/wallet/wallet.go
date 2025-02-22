@@ -18,7 +18,7 @@ var (
 )
 
 // Export the command variable
-var createWalletCmd = &cobra.Command{
+var CreateWalletCmd = &cobra.Command{
 	Use:   "create-wallet",
 	Short: "Generate a new wallaet",
 	Long:  `Creates a new wallet with the provided password and saves it`,
