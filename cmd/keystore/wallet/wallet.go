@@ -17,6 +17,17 @@ var (
 	outputDir      string
 )
 
+// TODO: Update wallet.go to properly export its command:
+/*
+The key changes to be made are:
+
+Removed the direct keystore creation from the keystore.go command - it's now just a parent command
+Exported the commands by capitalizing their names (KeystoreCmd and CreateWalletCmd)
+Moved the keystore directory flag to be persistent in the parent command
+Updated the wallet command to use the persistent keystore directory flag
+Removed the duplicate outputDir flag since we're using the persistent keystore-dir flag
+*/
+
 // Export the command variable
 var CreateWalletCmd = &cobra.Command{
 	Use:   "create-wallet",
@@ -72,11 +83,11 @@ var CreateWalletCmd = &cobra.Command{
 
 func init() {
 	// add flags to the create-wallet command
-	createWalletCmd.Flags().StringVarP(&walletPassword, "password", "p", "", "Password for the new wallet (required)")
-	createWalletCmd.Flags().StringVarP(&outputDir, "output", "o", "./keystore", "Directory to store the keystore file")
+	CreateWalletCmd.Flags().StringVarP(&walletPassword, "password", "p", "", "Password for the new wallet (required)")
+	CreateWalletCmd.Flags().StringVarP(&outputDir, "output", "o", "./keystore", "Directory to store the keystore file")
 
 	// Mark password as required
-	createWalletCmd.MarkFlagRequired("password")
+	CreateWalletCmd.MarkFlagRequired("password")
 }
 
 func validatePassword(password string) error {
