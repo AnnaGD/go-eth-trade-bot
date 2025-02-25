@@ -2,20 +2,21 @@ package trade
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
 var (
-	tokenIn string
-	tokenOut string
-	amount string
-	slippage float64
+	tokenIn     string
+	tokenOut    string
+	amount      string
+	slippage    float64
 	deadlineMin uint
 )
 
 // Execute command for trading
 var ExecuteCmd = &cobra.Command{
-	Use: "execute",
+	Use:   "execute",
 	Short: "Execute a trade on Uniswap V2",
 	Long: `Execute a token swap on Uniswap V2 liquidity pools.
 This command allows you to swap one token for another, specifying
@@ -59,6 +60,4 @@ func init() {
 
 	// Additional command to the parent trade command
 	TradeCmd.AddCommand(ExecuteCmd)
-
-
 }
