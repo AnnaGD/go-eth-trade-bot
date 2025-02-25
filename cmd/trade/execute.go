@@ -55,8 +55,8 @@ func init() {
 	ExecuteCmd.Flags().UintVar(&deadlineMin, "deadline", 20, "Transaction deadline in minutes")
 
 	// Required flags
-	ExecuteCmd.MarkFlagRequired()
-	ExecuteCmd.MarkFlagRequired()
+	ExecuteCmd.MarkFlagRequired("token-out")
+	ExecuteCmd.MarkFlagRequired("amount")
 
 	// Additional command to the parent trade command
 	TradeCmd.AddCommand(ExecuteCmd)
