@@ -7,7 +7,7 @@ import (
 // Trade command
 
 var TradeCmd = &cobra.Command{
-	Use: "trade",
+	Use:   "trade",
 	Short: "Execute trades on Uniswap V2",
 	Long: `The trade command allows you to execute trades on Uniswap V2 liquidity pools.
 It supports swapping tokens to deliberately create imbalances in pools or regular trading.`,

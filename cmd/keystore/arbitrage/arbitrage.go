@@ -5,8 +5,8 @@ import (
 )
 
 // Arbitrage command
-var ArbitrageCmd = &cobra.Command {
-	Use: "arbitrage",
+var ArbitrageCmd = &cobra.Command{
+	Use:   "arbitrage",
 	Short: "Detect and execute arbitrage opportunities",
 	Long: `The arbitrage command allows you to scan for and execute
 profitable arbitrage opportunities between different Uniswap V2 pools.

@@ -58,7 +58,7 @@ be exploited for profit.`,
 			select {
 			case <-ticker.C:
 				//Simulate finding an opportunity (in reality, this would check pool states)
-				if i%3 == 0{
+				if i%3 == 0 {
 					opportunityCount++
 					profit := minProfit + float64(i%5)
 					fmt.Printf("\n✅ Opportunity #%d found!\n", opportunityCount)
