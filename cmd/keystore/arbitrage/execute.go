@@ -8,14 +8,14 @@ import (
 )
 
 var (
-	tokenPath []string
-	maxSlippage float64
+	tokenPath         []string
+	maxSlippage       float64
 	executionDeadline uint
-	dryRun bool
+	dryRun            bool
 )
 
-var ExecuteCmd = &cobra.Command {
-	Use: "execute",
+var ExecuteCmd = &cobra.Command{
+	Use:   "execute",
 	Short: "Execute an arbitrage trade",
 	Long: `Execute an arbitrage trade across multiple Uniswap V2 pools.
 This command allows you to specify a token path to exploit price differences
