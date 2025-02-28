@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/AnnaGD/go-eth-trade-bot/cmd/keystore"
+	"github.com/AnnaGD/go-eth-trade-bot/cmd/keystore/arbitrage"
+	"github.com/AnnaGD/go-eth-trade-bot/cmd/trade"
 	"github.com/spf13/cobra"
 )
 
@@ -24,5 +26,12 @@ func Execute() {
 }
 
 func init() {
+
+	// Global persistent flags
+	rootCmd.PersistentFlags().Bool("verbose", false, "Enable verbose output")
+
+	// Top level commands
 	rootCmd.AddCommand(keystore.KeystoreCmd)
+	rootCmd.AddCommand(trade.TradeCmd)
+	rootCmd.AddCommand(arbitrage.ArbitrageCmd)
 }

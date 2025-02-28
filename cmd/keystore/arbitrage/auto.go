@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	autoInterval uint
+	autoInterval  uint
 	maxExecutions int
 	autoTimeLimit uint
 	minProfitAuto float64
@@ -19,7 +19,7 @@ var (
 
 // The auto command for arbitrage
 var AutoCmd = &cobra.Command{
-	Use: "auto",
+	Use:   "auto",
 	Short: "Automatically scan and execute arbitrage trades",
 	Long: `Run the arbitrage bot in automatic mode, continuously scanning for
 	opportunities and executing trades when profitable opportunities are found.
@@ -97,7 +97,7 @@ var AutoCmd = &cobra.Command{
 					if profit >= minProfit {
 						executionCount++
 						fmt.Printf("💰 Executing arbitrage trade #%d\n", executionCount)
-						time.Sleep(2 * time.Second) // Simulate execution time
+						time.Sleep(2 * time.Second)                                         // Simulate execution time
 						fmt.Printf("✅ Trade executed! Actual profit: %.2f%%\n", profit*0.9) // Slightly less due to slippage
 
 						if maxExecutions > 0 && executionCount >= maxExecutions {
@@ -105,7 +105,7 @@ var AutoCmd = &cobra.Command{
 							return
 						}
 					} else {
-						fmt.Printf("⚠️ Profit too low (%.2f%% < %.2f%%). Skipping execution.\n", 
+						fmt.Printf("⚠️ Profit too low (%.2f%% < %.2f%%). Skipping execution.\n",
 							profit, minProfit)
 					}
 				} else {
