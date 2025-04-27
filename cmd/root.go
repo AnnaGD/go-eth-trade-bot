@@ -10,6 +10,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Main function to execute the CLI
+func Execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+// Root command for the CLI
 var rootCmd = &cobra.Command{
 	Use:   "tradebot",
 	Short: "An automated arbitrage trading bot for EVM-compatible networks",
@@ -18,20 +27,18 @@ and mainnets, detecting arbitrage opportunities. It automates trade execution ba
 price discrepancies, optimizing transaction profitability.`,
 }
 
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
-
+// Initialize the `rootCmd` with addtional top level subcommands
 func init() {
 
 	// Global persistent flags
 	rootCmd.PersistentFlags().Bool("verbose", false, "Enable verbose output")
 
-	// Top level commands
+	// Keystore management for secret keys
 	rootCmd.AddCommand(keystore.KeystoreCmd)
+
+	// Trade command
 	rootCmd.AddCommand(trade.TradeCmd)
+
+	// Arbitrage command
 	rootCmd.AddCommand(arbitrage.ArbitrageCmd)
 }

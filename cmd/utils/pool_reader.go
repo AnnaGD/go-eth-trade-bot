@@ -2,7 +2,6 @@ package utils
 
 import (
 	"math/big"
-
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
