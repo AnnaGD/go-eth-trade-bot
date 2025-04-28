@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/AnnaGD/go-eth-trade-bot/cmd/keystore"
-	"github.com/AnnaGD/go-eth-trade-bot/cmd/keystore/arbitrage"
+	"github.com/AnnaGD/go-eth-trade-bot/cmd/trade/arbitrage"
 	"github.com/AnnaGD/go-eth-trade-bot/cmd/trade"
 	"github.com/spf13/cobra"
 )
@@ -22,8 +22,7 @@ func Execute() {
 var rootCmd = &cobra.Command{
 	Use:   "tradebot",
 	Short: "An automated arbitrage trading bot for EVM-compatible networks",
-	Long: `Tradebot scans multiple decentralized exchanges (DEXs) across EVM-compatible testnets 
-and mainnets, detecting arbitrage opportunities. It automates trade execution based on real-time 
+	Long: `Tradebot scans multiple decentralized exchanges (DEXs) across EVM-compatible testnets and mainnets, detecting arbitrage opportunities. It automates trade execution based on real-time 
 price discrepancies, optimizing transaction profitability.`,
 }
 

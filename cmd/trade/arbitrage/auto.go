@@ -21,9 +21,7 @@ var (
 var AutoCmd = &cobra.Command{
 	Use:   "auto",
 	Short: "Automatically scan and execute arbitrage trades",
-	Long: `Run the arbitrage bot in automatic mode, continuously scanning for
-	opportunities and executing trades when profitable opportunities are found.
-	Set minimum profit thresholds and other safety parameters to control execution.`,
+	Long: `Run the arbitrage bot in automatic mode, continuously scanning for opportunities and executing trades when profitable opportunities are found. Set minimum profit thresholds and other safety parameters to control execution.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get persistent flags
 		rpcURL, _ := cmd.Flags().GetString("rpc-url")

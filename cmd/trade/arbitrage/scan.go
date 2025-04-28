@@ -32,9 +32,7 @@ type PoolReserves struct {
 var ScanCmd = &cobra.Command{
 	Use:   "scan",
 	Short: "Scan for arbitrage opportunities",
-	Long: `Scan Uniswap V2 pools for potential arbitrage opportunities.
-This command monitors pool states and identifies imbalances that could
-be exploited for profit.`,
+	Long: `Scan Uniswap V2 pools for potential arbitrage opportunities. This command monitors pool states and identifies imbalances that could be exploited for profit.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get persistent flags
 		rpcURL, _ := cmd.Flags().GetString("rpc-url")
