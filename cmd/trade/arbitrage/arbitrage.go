@@ -1,5 +1,5 @@
 /*
-	The file doesn't implement the actual arbitrage logic but sets up the command structure
+	The file sets up the command structure
 */
 
 package arbitrage

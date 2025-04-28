@@ -1,3 +1,9 @@
+/*
+	This file represents the core scanning functionality of the arbitrage bot, providing a mechanism to continuously monitor pools and identify profitable trading opportunities based on price imbalances. While currently using simulated data, it's structured to be easily upgraded to interact with real blockchain data.
+
+*/
+
+
 package arbitrage
 
 import (
@@ -28,12 +34,23 @@ type PoolReserves struct {
 	Timestamp uint32
 }
 
-// Scan command for arbitrage
+// Defines the main scan command with its usage, descriptions, and run function.
+/*
+	Retrieves configuration from command flags, Establishes an Ethereum client connection,
+	Sets up pool monitoring with specified intervals, Implements graceful termination handling
+	Runs the main scanning loop that:
+		Checks each pool's reserves
+		Calculates current token ratios
+		Compares to target ratios
+		Identifies and reports arbitrage opportunities
+		Calculates potential profit percentages
+*/
 var ScanCmd = &cobra.Command{
 	Use:   "scan",
 	Short: "Scan for arbitrage opportunities",
 	Long: `Scan Uniswap V2 pools for potential arbitrage opportunities. This command monitors pool states and identifies imbalances that could be exploited for profit.`,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		// Get persistent flags
 		rpcURL, _ := cmd.Flags().GetString("rpc-url")
 		minProfit, _ := cmd.Flags().GetFloat64("min-profit")
@@ -167,11 +184,15 @@ var ScanCmd = &cobra.Command{
 	},
 }
 
-// getPoolReserves reads the reserves from a Uniswap V2 pool
-// This is a temporary implementation that will be replaced with actual contract calls
+// This is a placeholder function that simulates getting pool reserves
+
+/*
+	Currently returns deterministic mock values based on pool addresses
+	Is meant to be replaced with actual Uniswap V2 contract calls in production
+	Returns a `PoolReserves` struct with reserve values and timestamp
+*/
+
 func getPoolReserves(client *ethclient.Client, poolAddress string) (*PoolReserves, error) {
-	// TODO: Replace with actual contract call to get pool reserves
-	// For demo, we'll return placeholder values based on the pool address
 	
 	// Convert address string to common.Address
 	addr := common.HexToAddress(poolAddress)
@@ -199,6 +220,7 @@ func getPoolReserves(client *ethclient.Client, poolAddress string) (*PoolReserve
 
 // calculateCurrentRatio calculates the current ratio of token0 to token1
 func calculateCurrentRatio(reserves *PoolReserves) float64 {
+
 	// Convert big ints to float64 for ratio calculation
 	reserve0Float := new(big.Float).SetInt(reserves.Reserve0)
 	reserve1Float := new(big.Float).SetInt(reserves.Reserve1)
@@ -230,36 +252,19 @@ func calculatePotentialProfit(currentRatio, targetRatio float64) float64 {
 
 func init() {
 	// Add command-specific flags
+
+	// Scan frequency in seconds (default 30)
 	ScanCmd.Flags().UintVar(&scanInterval, "interval", 30, "Scan interval in seconds")
+
+	// Specific pools to monitor (default: all)
 	ScanCmd.Flags().StringSliceVar(&selectedPools, "pools", []string{}, "Pool names to monitor (default: all)")
+
+	// Output format (text or JSON)
 	ScanCmd.Flags().StringVar(&outputFormat, "output", "text", "Output format (text, json)")
+
+	// Duration to run the scan (0 for unlimited)
 	ScanCmd.Flags().UintVar(&scanTimeLimit, "time-limit", 0, "Time limit for scanning in minutes (0 for no limit)")
 
 	// Add this command to the parent arbitrage command
 	ArbitrageCmd.AddCommand(ScanCmd)
 }
-
-
-
-/*
-
-Pool Selection: The code reads from your constants.UniV2Pools to get the real pool addresses.
-Placeholder Function: The getPoolReserves function is a placeholder that will be replaced with real contract calls when you're ready. For now, it generates deterministic values based on pool addresses.
-Focus on Real Pools: There's no simulation fallback - it only works with the pools defined in your constants package.
-Core Logic:
-
-Reads pool reserves
-Calculates current ratio
-Compares to target ratio
-Identifies opportunities when imbalances exceed 1%
-Calculates potential profit
-
-To implement this:
-
-Make sure you've created the constants package with your pool addresses and target ratios.
-Replace this scan.go file with the one I provided.
-When you're ready to connect to real blockchain data, you'll only need to replace the getPoolReserves function with one that actually calls the Uniswap V2 contract.
-
-This approach is much simpler while still demonstrating the core arbitrage concepts with your real pool addresses. It also provides an easy path to fully implement the blockchain interaction when you're ready.
-
-*/
