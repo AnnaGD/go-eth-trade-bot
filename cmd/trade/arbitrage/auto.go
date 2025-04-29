@@ -1,3 +1,15 @@
+/*
+	The auto.go file implements the "auto" subcommand for the arbitrage bot. This command represents the fully automated mode of operation where the bot continuously scans for arbitrage opportunities and automatically executes trades when profitable scenarios are detected. This file provides a framework for running the bot unattended with configurable safety parameters.
+
+	Simulation vs. Production:
+
+	This is clearly a demonstration version with simulated trade finding and execution
+	Uses a simplified pattern (scanCount%4 == 0) to simulate finding opportunities
+	Simulates execution with time.Sleep(2 * time.Second)
+	Would need to be replaced with actual pool checking and trade execution in production
+*/
+
+
 package arbitrage
 
 import (
@@ -128,9 +140,17 @@ var AutoCmd = &cobra.Command{
 
 func init() {
 	// Add command-specific flags
+
+	// Scan frequency in seconds (default 30)
 	AutoCmd.Flags().UintVar(&autoInterval, "interval", 30, "Scan interval in seconds")
+
+	// Trading limit to prevent runaway execution
 	AutoCmd.Flags().IntVar(&maxExecutions, "max-executions", 0, "Maximum number of trades to execute (0 for unlimited)")
+
+	// Duration to run in automatic mode
 	AutoCmd.Flags().UintVar(&autoTimeLimit, "time-limit", 0, "Time limit in minutes (0 for no limit)")
+
+	// Override for minimum profit specifically in auto mode
 	AutoCmd.Flags().Float64Var(&minProfitAuto, "auto-min-profit", 0, "Minimum profit percentage override for auto mode")
 
 	// Add this command to the parent arbitrage command
