@@ -1,3 +1,8 @@
+/*
+	The execute.go file implements the "execute" subcommand for the arbitrage bot. This command is designed to execute a single arbitrage trade across multiple Uniswap V2 pools, following a specified token path to capitalize on price differences. Unlike the auto command which runs continuously, this command performs a one-time trade execution with detailed configuration options.
+
+*/
+
 package arbitrage
 
 import (
@@ -17,9 +22,7 @@ var (
 var ExecuteCmd = &cobra.Command{
 	Use:   "execute",
 	Short: "Execute an arbitrage trade",
-	Long: `Execute an arbitrage trade across multiple Uniswap V2 pools.
-This command allows you to specify a token path to exploit price differences
-between pools for profit.`,
+	Long: `Execute an arbitrage trade across multiple Uniswap V2 pools.This command allows you to specify a token path to exploit price differences between pools for profit.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get persistant flags
 		rpcURL, _ := cmd.Flags().GetString("rpc-url")
@@ -80,11 +83,36 @@ between pools for profit.`,
 
 func init() {
 	// Command-specific flags
+
+	// Token sequence for the arbitrage trade (default cycle: ETH→USDC→DAI→ETH)
 	ExecuteCmd.Flags().StringSliceVar(&tokenPath, "path", []string{"ETH", "USDC", "DAI", "ETH"}, "Token path for arbitrage (must form a cycle)")
+
+	// Maximum acceptable price slippage percentage (default 0.5%)
 	ExecuteCmd.Flags().Float64Var(&maxSlippage, "slippage", 0.5, "Maximum slippage percentage")
+
+	// Time limit for transaction execution (default 5 minutes)
 	ExecuteCmd.Flags().UintVar(&executionDeadline, "deadline", 5, "Transaction deadline in minutes")
+
+	// Simulation toggle, defaulting to true for safety
 	ExecuteCmd.Flags().BoolVar(&dryRun, "dry-run", true, "Simulate execution without sending transactions")
 
 	// Add this command to the parent arbitrage command
 	ArbitrageCmd.AddCommand(ExecuteCmd)
 }
+
+
+/*
+Execution Setup:
+
+Calculates the transaction deadline based on the current time and configured timeout
+Distinguishes between dry run (simulation) and live execution modes
+
+
+Execution Flow:
+
+In dry run mode, simulates the calculation and execution process with timing pauses
+Provides a detailed simulation report showing steps in the trade path and expected profits
+For live execution, currently displays a "not yet implemented" message
+The simulation shows how a trade would flow through multiple tokens and return to the original token with profit
+
+*/
